@@ -1,0 +1,36 @@
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["fullTextSearchPostgres", "omitApi"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+enum Role {
+    ADMIN
+    CUSTOMER
+}
+
+model User {
+    id        String   @id @default(uuid(7))
+    username  String   @unique
+    email     String   @unique
+    isActive  Boolean  @default(true)
+    isDeleted Boolean  @default(false)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+    auth      Auth?
+
+    @@map("user")
+}
+
+model Auth {
+    password String
+    role     Role   @default(CUSTOMER)
+    user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId   String @unique
+
+    @@map("auth")
+}

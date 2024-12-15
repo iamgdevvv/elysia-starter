@@ -1,0 +1,31 @@
+{
+	"name": "elysia-starter",
+	"scripts": {
+		"db:generate": "bun prisma generate",
+		"db:migrate": "bun prisma migrate dev",
+		"db:push": "bun prisma db push",
+		"lint": "bunx biome lint --write",
+		"check": "bunx biome check --write",
+		"format": "bunx biome format --write",
+		"dev": "bun run --watch src/index.ts",
+		"build": "bun run db:generate && bun run check && bun run lint && bun run format && bun build src/index.ts --outdir=build --target=bun --minify",
+		"start": "bun run build/index.js"
+	},
+	"dependencies": {
+		"@elysiajs/cors": "^1.1.1",
+		"@elysiajs/jwt": "^1.1.1",
+		"@elysiajs/server-timing": "^1.1.0",
+		"@elysiajs/swagger": "^1.1.6",
+		"@prisma/client": "^6.0.1",
+		"ajv": "^8.17.1",
+		"ajv-formats": "^3.0.1",
+		"cryptr": "^6.3.0",
+		"dayjs": "^1.11.13",
+		"elysia": "latest"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"bun-types": "latest",
+		"prisma": "^6.0.1"
+	}
+}
